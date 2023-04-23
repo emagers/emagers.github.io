@@ -20,7 +20,7 @@ When choosing what to do I considered the following:
 1. Minimal cost.
    * This blog is very small and does not need a robust solution that will allow it to scale infinitely.
 2. No 3rd party cookies or data handling.
-   * I never want my readers to have to deal with a cookie notice or worry that their data is going to be misused or sold to some partner.
+   * I never want my readers to have to deal with trying to understand complicated cookie notices or worry that their data is going to be misused or sold to some partner.
 3. Data anonymization.
    * Related to the second point, but I don't care to know *who* you are, just how you're interacting with the site.
 
