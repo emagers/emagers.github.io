@@ -5,6 +5,7 @@ date:   2023-04-22 10:17:59 -0800
 categories: web-analytics
 tags: web-analytics performance browsers tracking
 ---
+{% include scripts.html %}
 
 Although GitHub has made personal blogging very easy with the GitHub pages ecosystem, one thing which is lacking is analytics to understand who is visiting your blog, where they're coming from, what they're doing once here, and what blogs/pages are interesting to them.
 

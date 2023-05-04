@@ -1,0 +1,56 @@
+<head>
+<script>
+send_page_performance = (data) => {
+	const headers = {
+		type: "application/json",
+		session_id: sessionStorage['session_id']
+	};
+	const blob = new Blob([JSON.stringify(data)], headers);
+	navigator.sendBeacon("http://20.118.151.167:80/t", blob);
+}
+
+send_page_end = (data) => {
+	const headers = {
+		type: "application/json",
+		session_id: sessionStorage['session_id']
+	};
+	const blob = new Blob([JSON.stringify(data)], headers);
+	navigator.sendBeacon("http://20.118.151.167:80/e", blob);
+}
+
+let options = {
+	once: true
+}
+
+window.addEventListener('load', () => {
+	if (sessionStorage['session_id'] === undefined) {
+		sessionStorage.setItem('session_id', crypto.randomUUID())
+	}
+
+	let page_performance = {
+		uri: window.location.href.toString().split(window.location.host)[1],
+		host: window.location.host,
+		referer: document.referrer === '' ? null : document.referrer,
+		metrics: window.performance.getEntries()
+	}
+
+	send_page_performance(page_performance);
+}, options);
+
+window.addEventListener('beforeunload', () => {
+	if (sessionStorage['session_id'] === undefined) {
+		sessionStorage.setItem('session_id', crypto.randomUUID())
+	}
+
+	page_end = {
+		id: 0,
+		session_id: sessionStorage['session_id'],
+		uri: window.location.href.toString().split(window.location.host)[1],
+		host: window.location.host,
+		time_end: Date.now()
+	}
+
+	send_page_end(page_end);
+}, options);
+</script>
+</head>

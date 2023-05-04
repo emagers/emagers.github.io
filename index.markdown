@@ -4,6 +4,7 @@
 
 layout: home
 ---
+{% include scripts.html %}
 
 Like most things in my life, this site is a work in progress. I plan to discuss projects that I picked up in my personal time which I thought were cool or introduced me to some cool technology and blog about random tech or tech adjacent things.
 

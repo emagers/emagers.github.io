@@ -5,6 +5,7 @@ name: json-schema-validation
 github: https://github.com/emagers/json-schema-validation
 date: 2021-04-25
 ---
+{% include scripts.html %}
 
 GitHub Action that allows you to define and run tests against your JSON schema.
 

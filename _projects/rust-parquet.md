@@ -5,6 +5,7 @@ name: rust-parquet
 github: https://github.com/emagers/rust-parquet
 date: 2021-07-23
 ---
+{% include scripts.html %}
 
 A CLI tool for inspecting Parquet files.
 

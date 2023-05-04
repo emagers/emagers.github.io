@@ -5,6 +5,7 @@ date:   2023-01-18 10:17:59 -0800
 categories: sudoku publishing
 tags: sudoku publishing book sudoku-solver
 ---
+{% include scripts.html %}
 
 I recently published my first Sudoku puzzle book, and getting to this point has been a huge personal journey. Read on to learn all about how I got there.
 

@@ -5,6 +5,7 @@ name: ab-story-validation-action
 github: https://github.com/emagers/ab-story-validation-action
 date: 2021-02-24
 ---
+{% include scripts.html %}
 
 GitHub Action to validate that pull requests are commented with a link to an Azure Boards story.
 
