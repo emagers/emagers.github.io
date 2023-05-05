@@ -6,7 +6,7 @@ send_page_performance = (data) => {
 		session_id: sessionStorage['session_id']
 	};
 	const blob = new Blob([JSON.stringify(data)], headers);
-	navigator.sendBeacon("http://20.118.151.167:80/t", blob);
+	navigator.sendBeacon("https://ab-app.azurewebsites.net/t", blob);
 }
 
 send_page_end = (data) => {
@@ -15,11 +15,7 @@ send_page_end = (data) => {
 		session_id: sessionStorage['session_id']
 	};
 	const blob = new Blob([JSON.stringify(data)], headers);
-	navigator.sendBeacon("http://20.118.151.167:80/e", blob);
-}
-
-let options = {
-	once: true
+	navigator.sendBeacon("http://ab-app.azurewebsites.net/e", blob);
 }
 
 window.addEventListener('load', () => {
@@ -35,7 +31,9 @@ window.addEventListener('load', () => {
 	}
 
 	send_page_performance(page_performance);
-}, options);
+}, {
+	once: true
+});
 
 window.addEventListener('beforeunload', () => {
 	if (sessionStorage['session_id'] === undefined) {
@@ -51,6 +49,8 @@ window.addEventListener('beforeunload', () => {
 	}
 
 	send_page_end(page_end);
-}, options);
+}, {
+	once: true
+});
 </script>
 </head>
