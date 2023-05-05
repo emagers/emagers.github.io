@@ -15,7 +15,7 @@ send_page_end = (data) => {
 		session_id: sessionStorage['session_id']
 	};
 	const blob = new Blob([JSON.stringify(data)], headers);
-	navigator.sendBeacon("http://ab-app.azurewebsites.net/e", blob);
+	navigator.sendBeacon("https://ab-app.azurewebsites.net/e", blob);
 }
 
 window.addEventListener('load', () => {
