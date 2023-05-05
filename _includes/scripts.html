@@ -1,5 +1,11 @@
 <head>
 <script>
+if (options === undefined) {
+	var options = {
+		once: true
+	}
+}
+
 send_page_performance = (data) => {
 	const headers = {
 		type: "application/json",
@@ -31,9 +37,7 @@ window.addEventListener('load', () => {
 	}
 
 	send_page_performance(page_performance);
-}, {
-	once: true
-});
+}, options);
 
 window.addEventListener('beforeunload', () => {
 	if (sessionStorage['session_id'] === undefined) {
@@ -49,8 +53,6 @@ window.addEventListener('beforeunload', () => {
 	}
 
 	send_page_end(page_end);
-}, {
-	once: true
-});
+}, options);
 </script>
 </head>
