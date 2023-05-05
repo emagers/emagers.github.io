@@ -6,52 +6,56 @@ if (options === undefined) {
 	}
 }
 
-send_page_performance = (data) => {
-	var xhr = new XMLHttpRequest();
-	xhr.open("POST", "https://ab-app.azurewebsites.net/t", true);
-	xhr.setRequestHeader('Content-type', 'application/json');
-	xhr.setRequestHeader('session_id', sessionStorage['session_id']);
-	xhr.send(JSON.stringify(data));
+if (send_page_performance === undefined) {
+	var send_page_performance = (data) => {
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", "https://ab-app.azurewebsites.net/t", true);
+		xhr.setRequestHeader('Content-type', 'application/json');
+		xhr.setRequestHeader('session_id', sessionStorage['session_id']);
+		xhr.send(JSON.stringify(data));
+	}
+
+	window.addEventListener('load', () => {
+		if (sessionStorage['session_id'] === undefined) {
+			sessionStorage.setItem('session_id', crypto.randomUUID())
+		}
+
+		let page_performance = {
+			uri: window.location.href.toString().split(window.location.host)[1],
+			host: window.location.host,
+			referer: document.referrer === '' ? null : document.referrer,
+			metrics: window.performance.getEntries()
+		}
+
+		send_page_performance(page_performance);
+	}, options);
 }
 
-send_page_end = (data) => {
-	const headers = {
-		type: "application/json",
-		session_id: sessionStorage['session_id']
-	};
-	const blob = new Blob([JSON.stringify(data)], headers);
-	navigator.sendBeacon("https://ab-app.azurewebsites.net/e", blob);
+if (send_page_end === undefined) {
+	var send_page_end = (data) => {
+		const headers = {
+			type: "application/json",
+			session_id: sessionStorage['session_id']
+		};
+		const blob = new Blob([JSON.stringify(data)], headers);
+		navigator.sendBeacon("https://ab-app.azurewebsites.net/e", blob);
+	}
+
+	window.addEventListener('beforeunload', () => {
+		if (sessionStorage['session_id'] === undefined) {
+			sessionStorage.setItem('session_id', crypto.randomUUID())
+		}
+
+		page_end = {
+			id: 0,
+			session_id: sessionStorage['session_id'],
+			uri: window.location.href.toString().split(window.location.host)[1],
+			host: window.location.host,
+			time_end: Date.now()
+		}
+
+		send_page_end(page_end);
+	}, options);
 }
-
-window.addEventListener('load', () => {
-	if (sessionStorage['session_id'] === undefined) {
-		sessionStorage.setItem('session_id', crypto.randomUUID())
-	}
-
-	let page_performance = {
-		uri: window.location.href.toString().split(window.location.host)[1],
-		host: window.location.host,
-		referer: document.referrer === '' ? null : document.referrer,
-		metrics: window.performance.getEntries()
-	}
-
-	send_page_performance(page_performance);
-}, options);
-
-window.addEventListener('beforeunload', () => {
-	if (sessionStorage['session_id'] === undefined) {
-		sessionStorage.setItem('session_id', crypto.randomUUID())
-	}
-
-	page_end = {
-		id: 0,
-		session_id: sessionStorage['session_id'],
-		uri: window.location.href.toString().split(window.location.host)[1],
-		host: window.location.host,
-		time_end: Date.now()
-	}
-
-	send_page_end(page_end);
-}, options);
 </script>
 </head>
