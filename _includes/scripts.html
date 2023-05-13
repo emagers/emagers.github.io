@@ -34,12 +34,15 @@ if (send_page_performance === undefined) {
 
 if (send_page_end === undefined) {
 	var send_page_end = (data) => {
-		const headers = {
-			type: "application/json",
-			session_id: sessionStorage['session_id']
-		};
-		const blob = new Blob([JSON.stringify(data)], headers);
-		navigator.sendBeacon("https://ab-app.azurewebsites.net/tr", blob);
+		fetch('https://ab-app.azurewebsites.net/tr', {
+			keepalive: true,
+			method: 'POST',
+			headers: {
+				'content-type': 'application/json',
+				'session_id': sessionStorage['session_id']
+			},
+			body: JSON.stringify(data),
+		});
 	}
 
 	window.addEventListener('beforeunload', () => {
