@@ -9,7 +9,7 @@ if (options === undefined) {
 if (send_page_performance === undefined) {
 	var send_page_performance = (data) => {
 		var xhr = new XMLHttpRequest();
-		xhr.open("POST", "https://ab-app.azurewebsites.net/t", true);
+		xhr.open("POST", "https://ab-app.azurewebsites.net/tr", true);
 		xhr.setRequestHeader('Content-type', 'application/json');
 		xhr.setRequestHeader('session_id', sessionStorage['session_id']);
 		xhr.send(JSON.stringify(data));
@@ -21,6 +21,7 @@ if (send_page_performance === undefined) {
 		}
 
 		let page_performance = {
+			event: 'pagePerformance',
 			uri: window.location.href.toString().split(window.location.host)[1],
 			host: window.location.host,
 			referer: document.referrer === '' ? null : document.referrer,
@@ -38,7 +39,7 @@ if (send_page_end === undefined) {
 			session_id: sessionStorage['session_id']
 		};
 		const blob = new Blob([JSON.stringify(data)], headers);
-		navigator.sendBeacon("https://ab-app.azurewebsites.net/e", blob);
+		navigator.sendBeacon("https://ab-app.azurewebsites.net/tr", blob);
 	}
 
 	window.addEventListener('beforeunload', () => {
@@ -47,8 +48,7 @@ if (send_page_end === undefined) {
 		}
 
 		page_end = {
-			id: 0,
-			session_id: sessionStorage['session_id'],
+			event: 'pageEnd',
 			uri: window.location.href.toString().split(window.location.host)[1],
 			host: window.location.host,
 			time_end: Date.now()
